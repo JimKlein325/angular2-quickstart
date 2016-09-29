@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'my-dashboard',
   template: `
-    <h3>Top Heroes</h3>
+  <h3>Top Heroes</h3>
     <div class="grid grid-pad">
     <div *ngFor="let hero of heroes" (click)="gotoDetail(hero)" class="col-1-4">
       <div class="module hero">
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
       </div>
     </div>
     </div>
+  <hero-search></hero-search>
   `
 })
 export class DashboardComponent {
@@ -22,6 +23,7 @@ export class DashboardComponent {
   constructor(private heroService: HeroService, private router: Router) { }
 
   ngOnInit(): void {
+    this.heroService.getCatFact().subscribe(data => console.log(data));
     this.heroService.getHeroes()
       .then(heroes => this.heroes = heroes.slice(1, 5));
   }

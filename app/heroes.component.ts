@@ -14,13 +14,21 @@ import { HeroService } from './hero.service';
         [class.selected]="hero === selectedHero"
         (click)="onSelect(hero)">
           <span class="badge">{{hero.id}}</span> {{hero.name}}
-        </li>
+        </li><button class="delete"
+  (click)="delete(hero); $event.stopPropagation()">x</button>
+
       </ul>
       <div *ngIf="selectedHero">
         <h2>
           {{selectedHero.name | uppercase}} is my hero
         </h2>
         <button (click)="gotoDetail()">View Details</button>
+      </div>
+      <div>
+        <label>Hero name:</label> <input #heroName />
+        <button (click)="add(heroName.value); heroName.value=''">
+          Add
+        </button>
       </div>
     `
 })
@@ -43,4 +51,22 @@ export class HeroesComponent implements OnInit {
   gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedHero.id]);
   }
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.heroService.create(name)
+      .then(hero => {
+        this.heroes.push(hero);
+        this.selectedHero = null;
+      });
+    }
+    delete(hero: Hero): void {
+      this.heroService
+          .delete(hero.id)
+          .then(() => {
+            this.heroes = this.heroes.filter(h => h !== hero);
+            if (this.selectedHero === hero) { this.selectedHero = null; }
+          });
+    }
+
 }
