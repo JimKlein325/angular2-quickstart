@@ -23,10 +23,23 @@ export class DashboardComponent {
   constructor(private heroService: HeroService, private router: Router) { }
 
   ngOnInit(): void {
-    this.heroService.getCatFact().subscribe(data => console.log(data));
-    this.heroService.getHeroes()
-      .then(heroes => this.heroes = heroes.slice(1, 5));
-  }
+  //  this.heroService.getCatFact().subscribe(data => console.log(data));
+  //   this.heroService.getHeroes()
+  //     .then(heroes => this.heroes = heroes);
+  //     console.log(this.heroes);
+  // }
+  console.log("onInit");
+  this.heroService.getHeroes()
+  .subscribe(
+    data => { this.heroes = data},
+    err => { console.log("error") },
+    () => console.log("done")
+  );
+  // .then( (heroes) => this.heroes = heroes)
+  // .catch( (err) => {
+  //   console.log(err); // dont do this, show the user a nice message
+  // });
+}
 
   gotoDetail(hero: Hero): void {
     let link = ['/detail', hero.id];
