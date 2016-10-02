@@ -19,41 +19,16 @@ export class HeroService {
     return this.http.get("http://catfacts-api.appspot.com/api/facts/")
       .map(response => response.json() );
   }
-  // getCustomers() {
-  //     return this.http.get(URL_CUSTOMER)
-  //       .map((response: Response) => response.json())
-  //       .toPromise()
-  //       .catch((err: any) => {
-  //         console.log(err); // again, customize me please
-  //         return Promise.reject(err);
-  //       });
-  //   }
   getHeroes() {
      return this.http.get(this.heroesUrl)
      .map((res:Response) => res.json());
 
-    // this.http.get(this.heroesUrl)
-    //   .map((res:Response) => res.json())
-    //   .subscribe(
-    //     data => { this.heroes = data},
-    //     err => console.error(err),
-    //     () => console.log('done')
-    //   );
     }
-  // getHeroes(): Promise<Hero[]> {
-  //   return this.http.get(this.heroesUrl)
-  //               .toPromise()
-  //               .then(response =>
-  //                 {
-  //                   console.log(response);
-  //                   response.json().data as Hero[];
-  //                 })
-  //               .catch(this.handleError);
-  //                  }
-  // getHero(id: number): Promise<Hero> {
-  //   return this.getHeroes()
-  //     .then(heroes => heroes.find(hero => hero.id === id));
-  // }
+  getHero(id: number) {
+    console.log("hero id:" + id);
+      return this.http.get(this.heroesUrl + '/' + id)
+        .map((res:Response) => res.json());
+  }
 
 
 update(hero: Hero): Promise<Hero> {
